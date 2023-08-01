@@ -2,22 +2,19 @@
 
 class Solution {
 public:
-    vector<vector<int>>ans;
-    vector<int>temp;
-    vector<vector<int>> combine(int n, int k) {
-        memo(n,k);
-        return ans;
-    }
-    void memo(int n, int k){
-        if(k == temp.size()){
-            ans.push_back(temp);
-            return;
+    void dfs(int vertex, vector<int> g[], vector<int> &v, vector<bool> &vis){
+        vis[vertex]=true;
+        v.push_back(vertex);
+        for(auto child: g[vertex]){
+            if (vis[child]) continue;
+            dfs(child, g, v, vis);
         }
-        if(n == 0) return;
-        temp.push_back(n);
-        memo(n-1,k);
-        temp.pop_back();
-        memo(n-1,k);
+    }
+    vector<int> dfsOfGraph(int n, vector<int> g[]) {
+        vector<int> v;
+        vector<bool> vis(n, false);
+        dfs(0, g, v, vis);
+        return v;
     }
     
 };
